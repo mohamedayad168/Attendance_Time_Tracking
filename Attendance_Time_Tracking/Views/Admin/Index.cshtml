@@ -1,0 +1,166 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_AdminLayout";
+    List<Instructor> Instructors=ViewBag.NoInstructors as List<Instructor>;
+    int NoInt = Instructors.Count();
+    List<Employee> Employees = ViewBag.NoEmployees as List<Employee>;
+    List<Student> Students = ViewBag.NoStudents as List<Student>;
+    List<Track> Tracks = ViewBag.NoTracks as List<Track>;
+
+}
+
+ <div class="container ">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-2 g-2 text-center">
+
+    <div class="col">
+            <div class="text-center">
+                <img src="~/assets/social-dashboard-animate (1).svg" width="350px" />
+            </div>
+    </div> <!--End of left hand side-->
+
+        <div class="col cards-info">
+            <div class="row row-cols-1 row-cols-md-2 g-2 mt-auto pt-auto">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-body">
+                                <i class="fa-solid fa-chalkboard-user fs-1 m-4 card-title" style="color: #64CCC5;"></i>
+                            <h5 class="card-text">No. Instructors: @NoInt</h5>
+                            </div>
+                    </div>
+                </div> <!--End of Card 1-->
+                <div class="col">
+                    <div class="card">
+                        <div class="card-body">
+                                <i class="fa-solid fa-users fs-1 m-4 card-title" style="color: #64CCC5;"></i>
+                            <h5 class="card-text">No. Employees: @Employees.Count()</h5>
+                        </div>
+                    </div>
+                </div> <!--End of Card 2-->
+                <div class="col">
+                    <div class="card">
+                        <div class="card-body">
+                            <img src="~/assets/education (1)-colord.png" class="card-title  m-3" alt="..." width="50px">
+                            <h5 class="card-text">No. Students: @Students.Count()</h5>
+                            </div>
+                    </div>
+                </div> <!--End of Card 3-->
+                <div class="col">
+                    <div class="card">
+                        <div class="card-body">
+                            <img src="~/assets/education (2)-colord.png" class="card-title  m-3" alt="..." width="50px">
+                            <h5 class="card-text">No. Tracks: @Tracks.Count()</h5>
+                        </div>
+                    </div>
+                </div> <!--End of Card 4-->
+            </div>
+        </div> <!--End of right hand side--> 
+
+</div> <!--End of Row-->
+    <div class="charts row row-cols-1 row-cols-md-2 row-cols-lg-2 g-2 text-center d-flex justify-content-around align-items-center">
+        <div class="col">
+            <canvas id="myChart"></canvas>
+        </div>
+        <div class="col">
+            <canvas id="myPie"></canvas>
+
+        </div>
+</div>
+
+</div> <!--End of container-->
+@section Scripts{
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        /**Pie chart and its about the percentage of attendance for all Students, all Employees, all Instructors */
+
+        const ctxPie = document.getElementById('myPie');
+        const dataPie = {
+            labels: ['Students', 'Instructors', 'Employees'],
+            datasets: [{
+                label: 'Attendance Percentage',
+                data: [@ViewBag.StudentPercentage, @ViewBag.InstructorPercentage, @ViewBag.EmployeePercentage],
+                backgroundColor: [
+                    '#9D282F',      
+                    '#03045e',
+                    '#B4B4B8'
+                ],
+                hoverOffset: 10
+            }]
+        };
+        const configPie = {
+            type: 'pie',
+            data: dataPie,
+            options: {
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: '% of attendance for Students, Instructors,and Employees',
+                        font: {
+                            size: 20
+                        }
+                    }
+                },
+                radius: 150, 
+            }
+        };
+
+        var myPieChart = new Chart(ctxPie, configPie);
+
+        /** Bar Chart here and its about number of students in each track*/
+        const ctxBar = document.getElementById('myChart');
+        const dataBar = {
+            labels: @Html.Raw(Json.Serialize(ViewBag.TrackNames)),
+            datasets: [{
+                label: '# of Students',
+                data: @Html.Raw(Json.Serialize(ViewBag.TrackCounts)),
+                backgroundColor: '#64CCC5',
+                borderColor: '#64CCC5',
+                borderWidth: 1
+            }]
+        };
+        const configBar = {
+            type: 'bar',
+            data: dataBar,
+            options: {
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '# of Students in each Track',
+                        font: {
+                            size: 20 
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Tracks',
+                            font: {
+                                size: 14
+                            }
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: '# of Students',
+                            font: {
+                                size: 14
+                            }
+                        },
+                        beginAtZero: true
+                    }
+                },
+                barThickness: 30
+            }
+        };
+
+        var myBarChart = new Chart(ctxBar, configBar);
+
+    </script>
+
+}

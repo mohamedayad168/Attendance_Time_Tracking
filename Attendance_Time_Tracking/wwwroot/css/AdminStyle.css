@@ -1,0 +1,50 @@
+﻿
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+table.dataTable th.dt-type-numeric, table.dataTable th.dt-type-date,
+table.dataTable td.dt-type-numeric, table.dataTable td.dt-type-date 
+{
+     text-align: left !important;
+}
+
+
+
+.table {
+     --bs-table-bg:green !important;
+}
+.cards-info div.card {
+    color: #706E6E;
+   /* //align-self: center;
+    height: 300px;
+    width: 300px;*/
+    box-shadow: 2px 3px 5px #F5F7FC;
+   /* //border-radius: 20px;*/
+.cards-info div.card {
+    color: #706E6E;
+    box-shadow: 2px 3px 5px #F5F7FC;
+    transition: 1s;
+    transform: scale(1);
+}
+.cards-info div.card:hover {
+    cursor: pointer !important;
+   /* height: 280px;
+    width: 280px;*/
+    transform: scale(1.15);
+}
